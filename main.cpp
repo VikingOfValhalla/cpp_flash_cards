@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <list>
 
 class FlashCards {
     private:
@@ -8,6 +9,17 @@ class FlashCards {
     public: 
         std::string welcome_message;
 
+        std::list<std::string> flash_card_paths = {
+            "data/data_structures.txt",
+            "data/design_patters.txt",
+            "data/big_o.txt"
+        };
+
+        std::list<std::string> game_menu = { 
+            "Play", 
+            "Edit Flash Cards", 
+            "Exit" 
+        };
 };
 
 

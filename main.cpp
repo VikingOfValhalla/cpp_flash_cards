@@ -7,7 +7,7 @@ class FlashCards {
         // game instance -- if 1, game is on;
         int game_instance = 0;
     public: 
-        std::string welcome_message;
+        std::string welcome_message = "Hello, Please selection from the following options:";
 
         std::list<std::string> flash_card_paths = {
             "data/data_structures.txt",
@@ -48,13 +48,36 @@ int game_menu(int selection)
     return selection;
 }
 
+// iterate list
+std::string iterate_list(std::list<std::string> name_of_list, int position)
+{
+    std::list<std::string>::iterator selection = name_of_list.begin();
+    advance(selection, position);
+    return *selection;
+}
+
+
+/*
+// test function to iterate list
+std::string iterate_list2(std::list<std::string> name_of_list, int position)
+{
+    for(std::list<std::string>::iterator name_of_list.begin(); name_of_list)
+    {
+        std::cout << name_of_list[x] << std::endl;
+    }
+}
+*/
+
+
 int main ()
 {
+    FlashCards FlashCards;
+    
     // Start Menu
-    std::cout << "Hello, please select from the following options:" << "\n"; 
-    std::cout << "1: Play Flash Cards" << "\n";
-    std::cout << "2: Edit Flash Cards" << "\n";
-    std::cout << "3: Exit" << "\n";
+    std::cout << FlashCards.welcome_message << "\n"; 
+    std::cout << iterate_list(FlashCards.game_menu, 0) << "\n";
+    std::cout << iterate_list(FlashCards.game_menu, 1) << "\n";
+    std::cout << iterate_list(FlashCards.game_menu, 2) << "\n";
     
     int player_input;
     std::cin >> player_input;

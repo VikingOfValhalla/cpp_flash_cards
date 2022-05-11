@@ -30,16 +30,19 @@ int game_menu(int selection)
     {
     case 1:
         {
+            // function to play flash cards
             std::cout << "Play" << std::endl;
             break;
         }
     case 2:
         {
+            // function to edit flash cards
             std::cout << "Edit Flash Cards" << std::endl;
             break;
         }
     case 3:
         {
+            // function to exit program
             std::cout << "Exit" << std::endl;
             break;
         }
@@ -57,33 +60,31 @@ std::string iterate_list(std::list<std::string> name_of_list, int position)
 }
 
 
-/*
+
 // test function to iterate list
-std::string iterate_list2(std::list<std::string> name_of_list, int position)
+std::string iterate_list2(std::list<std::string> name_of_list)
 {
-    for(std::list<std::string>::iterator name_of_list.begin(); name_of_list)
+    for(std::list<std::string>::iterator it = name_of_list.begin(); it != name_of_list.end(); ++it)
     {
-        std::cout << name_of_list[x] << std::endl;
+        std::cout << *it << std::endl;
     }
+    return "Test";
 }
-*/
 
 
 int main ()
 {
     FlashCards FlashCards;
-    
+
     // Start Menu
     std::cout << FlashCards.welcome_message << "\n"; 
-    std::cout << iterate_list(FlashCards.game_menu, 0) << "\n";
-    std::cout << iterate_list(FlashCards.game_menu, 1) << "\n";
-    std::cout << iterate_list(FlashCards.game_menu, 2) << "\n";
-    
+    std::cout << "1: " << iterate_list(FlashCards.game_menu, 0) << "\n";
+    std::cout << "2: " << iterate_list(FlashCards.game_menu, 1) << "\n";
+    std::cout << "3: " << iterate_list(FlashCards.game_menu, 2) << "\n";
+   
+    // Player Initial Input
     int player_input;
     std::cin >> player_input;
 
-    int test = game_menu(player_input);
-
-    std::cout << test;
     return 0;
 }

@@ -7,7 +7,6 @@
 // ==================================
 //~~~~ TODO LIST ~~~~
 
-// TODO: split the input and append line into separate function to call into main switch statement
 // TODO: use getline() to select line and delete -- for question removal
 // TODO: adjust the syntax for the new question to better suit deliniations
 // TODO: work on play game read function
@@ -37,7 +36,7 @@ class FlashCards {
 };
 
 
-// file handler
+// input text into file
 void read_and_write_file(std::string file_location, std::string &text_to_add)
 {
     std::ofstream file_name;
@@ -53,6 +52,21 @@ std::string iterate_list(std::list<std::string> &name_of_list, int position)
     std::list<std::string>::iterator selection = name_of_list.begin();
     advance(selection, position);
     return *selection;
+}
+
+
+std::string input_string_to_var()
+{ 
+    // read multiple words into buffer
+    std::string input_flash_card;
+    
+    std::cout << "SYNTAX: \"QUESTION\"; {ANSWER}" << "\n";
+    std::cout << "Enter Text: ";
+
+    std::getline(std::cin, input_flash_card);
+    input_flash_card = "\n" + input_flash_card;
+    
+    return input_flash_card;
 }
 
 
@@ -87,15 +101,21 @@ int main ()
         }
 
 
-    // function to edit flash cards
+    // function to add to flash cards
     case 2:
         {
-            // read multiple words into buffer
-            std::string input_flash_card;
-            std::cout << "SYNTAX: \"QUESTION\"; {ANSWER}" << "\n";
-            std::cout << "Enter Text: ";
-            std::getline(std::cin, input_flash_card);
-            input_flash_card = "\n" + input_flash_card;
+            // input text to add to flash card
+            std::string input_flash_card = input_string_to_var();
+
+            // TODO: this logical operator is messed up -- only finds the first { not the proceeding }
+            bool found_symbol = ((input_flash_card.find("{")) && (input_flash_card.find("}")) == std::string::npos);
+            std::cout << found_symbol << "\n";
+            // error to catch syntactical question input
+            if(found_symbol == true)
+            {
+                std::cout << "Please enter the correct syntax." << "\n";
+            };
+
 
             // input string from buffer into file
             read_and_write_file(iterate_list(FlashCards.flash_card_paths, 0), input_flash_card);

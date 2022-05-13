@@ -11,7 +11,6 @@
 // TODO: adjust the syntax for the new question to better suit deliniations
 // TODO: work on play game read function
 // TODO: create game loop and include a score count for each correct question
-// TODO: create something to catch input create error
 // TODO: adjust .gitignore to not include .exe and .ccls files
 // ==================================
 
@@ -33,7 +32,6 @@ class FlashCards {
             "Edit Flash Cards", 
             "Exit" 
         };
-        bool exception;
 };
 
 
@@ -70,19 +68,21 @@ std::string input_string_to_var()
     return input_flash_card;
 }
 
-std::string error_handling(std::string search_string)
+
+void error_handling(std::string search_string)
 {
 
     // TODO: this logical operator is messed up -- only finds the first { not the proceeding }
-    bool found_symbol = ((search_string.find("{")) && (search_string.find("}")) == std::string::npos);
-    std::cout << found_symbol << "\n";
+    int found_symbol = search_string.find("{") == std::string::npos;
+    int found_symbol2 = search_string.find("}") == std::string::npos; 
+    
     // error to catch syntactical question input
-    if(found_symbol == true)
+    if((found_symbol || found_symbol2) > 0)
     {
         std::cout << "Please enter the correct syntax." << "\n";
     };
-    return "Please enter the correct syntax.";
 }
+
 
 int main ()
 {

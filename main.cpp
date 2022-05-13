@@ -33,6 +33,7 @@ class FlashCards {
             "Edit Flash Cards", 
             "Exit" 
         };
+        bool exception;
 };
 
 
@@ -69,6 +70,19 @@ std::string input_string_to_var()
     return input_flash_card;
 }
 
+std::string error_handling(std::string search_string)
+{
+
+    // TODO: this logical operator is messed up -- only finds the first { not the proceeding }
+    bool found_symbol = ((search_string.find("{")) && (search_string.find("}")) == std::string::npos);
+    std::cout << found_symbol << "\n";
+    // error to catch syntactical question input
+    if(found_symbol == true)
+    {
+        std::cout << "Please enter the correct syntax." << "\n";
+    };
+    return "Please enter the correct syntax.";
+}
 
 int main ()
 {
@@ -107,15 +121,8 @@ int main ()
             // input text to add to flash card
             std::string input_flash_card = input_string_to_var();
 
-            // TODO: this logical operator is messed up -- only finds the first { not the proceeding }
-            bool found_symbol = ((input_flash_card.find("{")) && (input_flash_card.find("}")) == std::string::npos);
-            std::cout << found_symbol << "\n";
-            // error to catch syntactical question input
-            if(found_symbol == true)
-            {
-                std::cout << "Please enter the correct syntax." << "\n";
-            };
-
+            // error handling
+            error_handling(input_flash_card);
 
             // input string from buffer into file
             read_and_write_file(iterate_list(FlashCards.flash_card_paths, 0), input_flash_card);

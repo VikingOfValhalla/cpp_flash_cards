@@ -12,6 +12,7 @@
 // TODO: work on play game read function
 // TODO: create game loop and include a score count for each correct question
 // TODO: adjust .gitignore to not include .exe and .ccls files
+// TODO: fix the pass by reference for the reading and writing file function
 // ==================================
 
 class FlashCards {
@@ -36,12 +37,29 @@ class FlashCards {
 
 
 // input text into file
-void read_and_write_file(std::string file_location, std::string &text_to_add)
-{
-    std::ofstream file_name;
-    file_name.open(file_location, std::ios_base::app);
-    file_name << text_to_add;
-    file_name.close();
+void read_and_write_file(std::string file_location, char w_or_r, std::string text_to_add="")
+{    
+    // logic for writing to file
+    if(w_or_r == 'w')
+    {
+        std::ofstream file_name;
+        file_name.open(file_location, std::ios_base::app);
+        file_name << text_to_add;
+        file_name.close();
+    }
+    
+    // logic for reading the file
+    if(w_or_r == 'r')
+    {
+        std::ifstream file_name;
+        file_name.open(file_location, std::ios_base::app);
+        std::string file_text;
+        while(std::getline(file_name,file_text))
+        {
+            std::cout << file_text << std::endl;
+        };
+        file_name.close();
+    }
 }
 
 
@@ -71,8 +89,7 @@ std::string input_string_to_var()
 
 void flash_card_syntax_handling(std::string search_string)
 {
-
-    // TODO: this logical operator is messed up -- only finds the first { not the proceeding }
+    // symbols for syntactical requirements
     int found_symbol = search_string.find("{") == std::string::npos;
     int found_symbol2 = search_string.find("}") == std::string::npos; 
     
@@ -114,6 +131,10 @@ int main ()
         case 1:
             {
                 std::cout << "Play" << std::endl;
+            
+                // input string from buffer into file
+                read_and_write_file(iterate_list(FlashCards.flash_card_paths, 0),'r');
+            
                 break;
             }
 
@@ -128,7 +149,7 @@ int main ()
                 flash_card_syntax_handling(input_flash_card);
 
                 // input string from buffer into file
-                read_and_write_file(iterate_list(FlashCards.flash_card_paths, 0), input_flash_card);
+                read_and_write_file(iterate_list(FlashCards.flash_card_paths, 0), 'w', input_flash_card);
             }
 
 

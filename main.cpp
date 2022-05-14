@@ -69,7 +69,7 @@ std::string input_string_to_var()
 }
 
 
-void error_handling(std::string search_string)
+void flash_card_syntax_handling(std::string search_string)
 {
 
     // TODO: this logical operator is messed up -- only finds the first { not the proceeding }
@@ -79,62 +79,72 @@ void error_handling(std::string search_string)
     // error to catch syntactical question input
     if((found_symbol || found_symbol2) > 0)
     {
-        std::cout << "Please enter the correct syntax." << "\n";
+        throw "Please enter the correct syntax.\n";
     };
 }
 
 
 int main ()
 {
-    FlashCards FlashCards; 
-    
-    
-    // Start Menu
-    std::cout << FlashCards.welcome_message << "\n"; 
-    std::cout << "1: " << iterate_list(FlashCards.game_menu, 0) << "\n";
-    std::cout << "2: " << iterate_list(FlashCards.game_menu, 1) << "\n";
-    std::cout << "3: " << iterate_list(FlashCards.game_menu, 2) << "\n";
-   
-   
-    // player initial input
-    int player_input;
-    std::cin >> player_input;
-    // to clear the buffer after cin
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    
-    // handle test cases of input selections
-    switch(player_input)
+    // MAIN PROGRAM    
+    try {
+            
+        FlashCards FlashCards; 
+        
+        
+        // Start Menu
+        std::cout << FlashCards.welcome_message << "\n"; 
+        std::cout << "1: " << iterate_list(FlashCards.game_menu, 0) << "\n";
+        std::cout << "2: " << iterate_list(FlashCards.game_menu, 1) << "\n";
+        std::cout << "3: " << iterate_list(FlashCards.game_menu, 2) << "\n";
+       
+       
+        // player initial input
+        int player_input;
+        std::cin >> player_input;
+        // to clear the buffer after cin
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        
+        // handle test cases of input selections
+        switch(player_input)
+        {
+
+
+        // function to play flash cards
+        case 1:
+            {
+                std::cout << "Play" << std::endl;
+                break;
+            }
+
+
+        // function to add to flash cards
+        case 2:
+            {
+                // input text to add to flash card
+                std::string input_flash_card = input_string_to_var();
+
+                // error handling
+                flash_card_syntax_handling(input_flash_card);
+
+                // input string from buffer into file
+                read_and_write_file(iterate_list(FlashCards.flash_card_paths, 0), input_flash_card);
+            }
+
+
+        // function to exit program
+        case 3:
+            {
+                break;
+            }
+
+        }
+    }
+
+    // ERROR HANDLING
+    catch (const char* exception)
     {
-
-
-    // function to play flash cards
-    case 1:
-        {
-            std::cout << "Play" << std::endl;
-            break;
-        }
-
-
-    // function to add to flash cards
-    case 2:
-        {
-            // input text to add to flash card
-            std::string input_flash_card = input_string_to_var();
-
-            // error handling
-            error_handling(input_flash_card);
-
-            // input string from buffer into file
-            read_and_write_file(iterate_list(FlashCards.flash_card_paths, 0), input_flash_card);
-        }
-
-    
-    // function to exit program
-    case 3:
-        {
-            break;
-        }
-
+        std::cout << "Exception: " << exception << std::endl;
     }
 
     // end program

@@ -10,9 +10,8 @@
 // TODO: use getline() to select line and delete -- for question removal
 // TODO: adjust the syntax for the new question to better suit deliniations
 // TODO: work on play game read function
-// TODO: create game loop and include a score count for each correct question
+// TODO: include a score count for each correct question
 // TODO: adjust .gitignore to not include .exe and .ccls files
-// TODO: fix the pass by reference for the reading and writing file function
 // ==================================
 
 class FlashCards {
@@ -37,31 +36,28 @@ class FlashCards {
 
 
 // input text into file
-void read_and_write_file(std::string file_location, char w_or_r, std::string text_to_add="")
+void write_file(std::string file_location, std::string &text_to_add)
 {    
     // logic for writing to file
-    if(w_or_r == 'w')
-    {
-        std::ofstream file_name;
-        file_name.open(file_location, std::ios_base::app);
-        file_name << text_to_add;
-        file_name.close();
-    }
+    std::ofstream file_name;
+    file_name.open(file_location, std::ios_base::app);
+    file_name << text_to_add;
+    file_name.close();
     
-    // logic for reading the file
-    if(w_or_r == 'r')
-    {
-        std::ifstream file_name;
-        file_name.open(file_location, std::ios_base::app);
-        std::string file_text;
-        while(std::getline(file_name,file_text))
-        {
-            std::cout << file_text << std::endl;
-        };
-        file_name.close();
-    }
 }
 
+void read_file(std::string file_location)    
+{
+    // logic for reading the file
+    std::ifstream file_name;
+    file_name.open(file_location, std::ios_base::app);
+    std::string file_text;
+    while(std::getline(file_name,file_text))
+    {
+        std::cout << file_text << std::endl;
+    };
+    file_name.close();
+}
 
 // iterate list
 std::string iterate_list(std::list<std::string> &name_of_list, int position)
@@ -105,60 +101,63 @@ int main ()
 {
     // MAIN PROGRAM    
     try {
-            
-        FlashCards FlashCards; 
-        
-        
-        // Start Menu
-        std::cout << FlashCards.welcome_message << "\n"; 
-        std::cout << "1: " << iterate_list(FlashCards.game_menu, 0) << "\n";
-        std::cout << "2: " << iterate_list(FlashCards.game_menu, 1) << "\n";
-        std::cout << "3: " << iterate_list(FlashCards.game_menu, 2) << "\n";
-       
-       
-        // player initial input
-        int player_input;
-        std::cin >> player_input;
-        // to clear the buffer after cin
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        
-        // handle test cases of input selections
-        switch(player_input)
+
+        // game loop
+        while(true)
         {
-
-
-        // function to play flash cards
-        case 1:
-            {
-                std::cout << "Play" << std::endl;
+            FlashCards FlashCards; 
             
-                // input string from buffer into file
-                read_and_write_file(iterate_list(FlashCards.flash_card_paths, 0),'r');
             
-                break;
-            }
-
-
-        // function to add to flash cards
-        case 2:
+            // Start Menu
+            std::cout << FlashCards.welcome_message << "\n"; 
+            std::cout << "1: " << iterate_list(FlashCards.game_menu, 0) << "\n";
+            std::cout << "2: " << iterate_list(FlashCards.game_menu, 1) << "\n";
+            std::cout << "3: " << iterate_list(FlashCards.game_menu, 2) << "\n";
+           
+           
+            // player initial input
+            int player_input;
+            std::cin >> player_input;
+            
+            // to clear the buffer after cin
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            
+            // handle test cases of input selections
+            switch(player_input)
             {
-                // input text to add to flash card
-                std::string input_flash_card = input_string_to_var();
 
-                // error handling
-                flash_card_syntax_handling(input_flash_card);
 
-                // input string from buffer into file
-                read_and_write_file(iterate_list(FlashCards.flash_card_paths, 0), 'w', input_flash_card);
+            // function to play flash cards
+            case 1:
+                {
+                    // input string from buffer into file
+                    read_file(iterate_list(FlashCards.flash_card_paths, 0));
+                
+                    break;
+                }
+
+
+            // function to add to flash cards
+            case 2:
+                {
+                    // input text to add to flash card
+                    std::string input_flash_card = input_string_to_var();
+
+                    // error handling
+                    flash_card_syntax_handling(input_flash_card);
+
+                    // input string from buffer into file
+                    write_file(iterate_list(FlashCards.flash_card_paths, 0), input_flash_card);
+                }
+
+
+            // function to exit program
+            case 3:
+                {
+                    break;
+                }
+
             }
-
-
-        // function to exit program
-        case 3:
-            {
-                break;
-            }
-
         }
     }
 

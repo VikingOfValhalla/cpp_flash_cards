@@ -88,11 +88,12 @@ void flash_card_syntax_handling(std::string search_string)
     // symbols for syntactical requirements
     int found_symbol = search_string.find("{") == std::string::npos;
     int found_symbol2 = search_string.find("}") == std::string::npos; 
-    
+    int found_comma = search_string.find(",") == std::string::npos;
+
     // error to catch syntactical question input
-    if((found_symbol || found_symbol2) > 0)
+    if((found_symbol || found_symbol2 || found_comma) > 0)
     {
-        throw "Please enter the correct syntax.\n";
+        throw "Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n";
     };
 }
 

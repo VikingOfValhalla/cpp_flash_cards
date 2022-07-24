@@ -84,24 +84,24 @@ std::string input_string_to_var()
 }
 
 bool is_valid(std::string s) {
-    std::stack<char> open;
-        
+std::stack<char> open;
+
     for (int i = 0; i < s.size(); i++) {
         if (s[i] == ')' || s[i] == '}' || s[i] == ']') {
             if (open.empty()) {
-                throw "01 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n";
+                throw std::runtime_error("01 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n");
                 return false;
             }
             if (s[i] == ')' && open.top() != '(') {
-                throw "02 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n";
+                throw std::runtime_error("02 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n");
                 return false;
             }
             if (s[i] == '}' && open.top() != '{') {
-                throw "03 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n";
+                throw std::runtime_error("03 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n");
                 return false;
             }
             if (s[i] == ']' && open.top() != '[') {
-                throw "04 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n";
+                throw std::runtime_error("04 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n");
                 return false;
             }
             open.pop();
@@ -109,13 +109,12 @@ bool is_valid(std::string s) {
             open.push(s[i]);
         }
     }
-    /* 
     if (!open.empty()) {
-        throw "05 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n";
+        throw std::runtime_error("05 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n");
         return false;
     }
-    */
     return true;
+
     /*
     // symbols for syntactical requirements
     int found_symbol = search_string.find("{") == std::string::npos;

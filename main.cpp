@@ -3,6 +3,8 @@
 #include <limits>
 #include <list>
 #include <string>
+#include <map>
+#include <stack>
 
 // ==================================
 //~~~~ TODO LIST ~~~~
@@ -85,6 +87,15 @@ std::string input_string_to_var()
 
 void flash_card_syntax_handling(std::string search_string)
 {
+    
+    // TODO: use stack and map combo for syntax
+    std::stack<int> stack;
+    std::map <char, char> close_to_open;
+    close_to_open['}'] = '{';
+
+
+    std::cout << typeid(close_to_open).name() << "\n";
+    
     // symbols for syntactical requirements
     int found_symbol = search_string.find("{") == std::string::npos;
     int found_symbol2 = search_string.find("}") == std::string::npos; 

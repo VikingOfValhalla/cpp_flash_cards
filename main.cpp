@@ -3,7 +3,6 @@
 #include <limits>
 #include <list>
 #include <string>
-#include <map>
 #include <stack>
 
 // ==================================
@@ -84,18 +83,40 @@ std::string input_string_to_var()
     return input_flash_card;
 }
 
-
-void flash_card_syntax_handling(std::string search_string)
-{
-    
-    // TODO: use stack and map combo for syntax
-    std::stack<int> stack;
-    std::map <char, char> close_to_open;
-    close_to_open['}'] = '{';
-
-
-    std::cout << typeid(close_to_open).name() << "\n";
-    
+bool is_valid(std::string s) {
+    std::stack<char> open;
+        
+    for (int i = 0; i < s.size(); i++) {
+        if (s[i] == ')' || s[i] == '}' || s[i] == ']') {
+            if (open.empty()) {
+                throw "01 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n";
+                return false;
+            }
+            if (s[i] == ')' && open.top() != '(') {
+                throw "02 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n";
+                return false;
+            }
+            if (s[i] == '}' && open.top() != '{') {
+                throw "03 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n";
+                return false;
+            }
+            if (s[i] == ']' && open.top() != '[') {
+                throw "04 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n";
+                return false;
+            }
+            open.pop();
+        } else {
+            open.push(s[i]);
+        }
+    }
+    /* 
+    if (!open.empty()) {
+        throw "05 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n";
+        return false;
+    }
+    */
+    return true;
+    /*
     // symbols for syntactical requirements
     int found_symbol = search_string.find("{") == std::string::npos;
     int found_symbol2 = search_string.find("}") == std::string::npos; 
@@ -106,6 +127,7 @@ void flash_card_syntax_handling(std::string search_string)
     {
         throw "Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n";
     };
+    */
 }
 
 
@@ -156,8 +178,10 @@ int main ()
                     std::string input_flash_card = input_string_to_var();
 
                     // error handling
-                    flash_card_syntax_handling(input_flash_card);
-
+                    bool syntax_bool;
+                    syntax_bool = is_valid(input_flash_card);
+                    std::cout << "Syntax_bool return: " << std::boolalpha << syntax_bool << "\n";
+                    
                     // input string from buffer into file
                     write_file(iterate_list(FlashCards.flash_card_paths, 0), input_flash_card);
                 }

@@ -37,8 +37,7 @@ class FlashCards {
 
 
 // input text into file
-void write_file(std::string file_location, std::string &text_to_add)
-{    
+void write_file(std::string file_location, std::string &text_to_add) {    
     // logic for writing to file
     std::ofstream file_name;
     file_name.open(file_location, std::ios_base::app);
@@ -47,97 +46,99 @@ void write_file(std::string file_location, std::string &text_to_add)
     
 }
 
-void read_file(std::string file_location)    
-{
+void read_file(std::string file_location) {
     // logic for reading the file
     std::ifstream file_name;
     file_name.open(file_location, std::ios_base::app);
     std::string file_text;
-    while(std::getline(file_name,file_text))
-    {
+
+    while(std::getline(file_name,file_text)) {
         std::cout << file_text << std::endl;
     };
     file_name.close();
 }
 
 // iterate list
-std::string iterate_list(std::list<std::string> &name_of_list, int position)
-{
+std::string iterate_list(std::list<std::string> &name_of_list, int position) {
     std::list<std::string>::iterator selection = name_of_list.begin();
     advance(selection, position);
     return *selection;
 }
 
 
-std::string input_string_to_var()
-{ 
+std::string input_string_to_var() {
+ 
     // read multiple words into buffer
     std::string input_flash_card;
     
-    std::cout << "SYNTAX: \"QUESTION\"; {ANSWER}" << "\n";
+    std::cout << "SYNTAX: (\"QUESTION\"); {\"ANSWER\"}" << "\n";
     std::cout << "Enter Text: ";
 
     std::getline(std::cin, input_flash_card);
-    input_flash_card = "\n" + input_flash_card;
     
     return input_flash_card;
 }
 
-bool is_valid(std::string s) {
-std::stack<char> open;
+
+void remove_alphanum_characters(std::string s) {
+    
+    // input string, remove alpanumeric characters
 
     for (int i = 0; i < s.size(); i++) {
+        // remove letters from string
+        if ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z')) {
+            s.erase(s[i]); //remove from string
+        }
+    }
+}
+
+
+bool is_valid(std::string s) {
+    
+    // input string, return syntax bool
+
+    std::stack<char> open;
+
+    for (int i = 0; i < s.size(); i++) {
+        
+        // evalute syntax
         if (s[i] == ')' || s[i] == '}' || s[i] == ']') {
             if (open.empty()) {
-                throw std::runtime_error("01 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n");
+                throw std::runtime_error("01 Please enter the correct syntax.Use (\"QUESTION\"),{\"ANSWER\"}\n");
                 return false;
             }
             if (s[i] == ')' && open.top() != '(') {
-                throw std::runtime_error("02 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n");
+                throw std::runtime_error("02 Please enter the correct syntax.Use (\"QUESTION\"),{\"ANSWER\"}\n");
                 return false;
             }
             if (s[i] == '}' && open.top() != '{') {
-                throw std::runtime_error("03 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n");
+                throw std::runtime_error("03 Please enter the correct syntax.Use (\"QUESTION\"),{\"ANSWER\"}\n");
                 return false;
             }
             if (s[i] == ']' && open.top() != '[') {
-                throw std::runtime_error("04 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n");
+                throw std::runtime_error("04 Please enter the correct syntax.Use (\"QUESTION\"),{\"ANSWER\"}\n");
                 return false;
             }
             open.pop();
         } else {
             open.push(s[i]);
         }
-    }
-    if (!open.empty()) {
-        throw std::runtime_error("05 Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n");
-        return false;
-    }
+        }
+        if (!open.empty()) {
+            throw std::runtime_error("05 Please enter the correct syntax.Use (\"QUESTION\"),{\"ANSWER\"}\n");
+            return false;
+        }
     return true;
-
-    /*
-    // symbols for syntactical requirements
-    int found_symbol = search_string.find("{") == std::string::npos;
-    int found_symbol2 = search_string.find("}") == std::string::npos; 
-    int found_comma = search_string.find(",") == std::string::npos;
-
-    // error to catch syntactical question input
-    if((found_symbol || found_symbol2 || found_comma) > 0)
-    {
-        throw "Please enter the correct syntax.Use '{QUESTION},{ANSWER}'\n";
-    };
-    */
 }
 
+int main () {
+    
+    // MAIN PROGRAM
 
-int main ()
-{
-    // MAIN PROGRAM    
     try {
 
         // game loop
-        while(true)
-        {
+        while(true) {
             FlashCards FlashCards; 
             
             
@@ -155,24 +156,25 @@ int main ()
             // to clear the buffer after cin
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             
-            // handle test cases of input selections
-            switch(player_input)
-            {
-
-
-            // function to play flash cards
-            case 1:
-                {
+            switch(player_input) {
+                
+                // input player input, complete switch case
+                
+                case 1: {
+                    
+                    // function to play flash cards
+                    
+ 
                     // input string from buffer into file
                     read_file(iterate_list(FlashCards.flash_card_paths, 0));
                 
                     break;
                 }
 
+                case 2: {
+                    
+                    // function to add to flash cards
 
-            // function to add to flash cards
-            case 2:
-                {
                     // input text to add to flash card
                     std::string input_flash_card = input_string_to_var();
 
@@ -186,19 +188,16 @@ int main ()
                 }
 
 
-            // function to exit program
-            case 3:
-                {
+                // function to exit program
+                case 3: {
                     break;
                 }
-
             }
         }
     }
 
     // ERROR HANDLING
-    catch (const char* exception)
-    {
+    catch (const char* exception) {
         std::cout << "Exception: " << exception << std::endl;
     }
 

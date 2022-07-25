@@ -35,10 +35,10 @@ class FlashCards {
         };
 };
 
-
-// input text into file
+/*
+* input text into file
+*/
 void write_file(std::string file_location, std::string &text_to_add) {    
-    // logic for writing to file
     std::ofstream file_name;
     file_name.open(file_location, std::ios_base::app);
     file_name << text_to_add;
@@ -46,8 +46,10 @@ void write_file(std::string file_location, std::string &text_to_add) {
     
 }
 
+/*
+* logic for reading the file
+*/
 void read_file(std::string file_location) {
-    // logic for reading the file
     std::ifstream file_name;
     file_name.open(file_location, std::ios_base::app);
     std::string file_text;
@@ -79,29 +81,26 @@ std::string input_string_to_var() {
     return input_flash_card;
 }
 
-
-void remove_alphanum_characters(std::string s) {
-    
-    // input string, remove alpanumeric characters
-
-    for (int i = 0; i < s.size(); i++) {
-        // remove letters from string
-        if ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z')) {
-            s.erase(s[i]); //remove from string
-        }
-    }
-}
-
-
+/*
+* Input string, return syntax bool of evaluted syntax
+*/
 bool is_valid(std::string s) {
     
-    // input string, return syntax bool
-
     std::stack<char> open;
 
+    // remove alpanumeric characters
+    std::cout << "Before remove: " << s << "\n";
+    for (int i = 0; i < s.size(); i++) {
+        std::cout << i << "\n";
+        if ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z')) {
+            s.erase(i); //remove from string
+        }
+    }
+    std::cout << "After remove: " << s << "\n";
+
+    // evalutes syntax
     for (int i = 0; i < s.size(); i++) {
         
-        // evalute syntax
         if (s[i] == ')' || s[i] == '}' || s[i] == ']') {
             if (open.empty()) {
                 throw std::runtime_error("01 Please enter the correct syntax.Use (\"QUESTION\"),{\"ANSWER\"}\n");
@@ -120,21 +119,22 @@ bool is_valid(std::string s) {
                 return false;
             }
             open.pop();
-        } else {
+        } 
+        else {
             open.push(s[i]);
         }
-        }
-        if (!open.empty()) {
-            throw std::runtime_error("05 Please enter the correct syntax.Use (\"QUESTION\"),{\"ANSWER\"}\n");
-            return false;
-        }
+    }
+    if (!open.empty()) {
+        throw std::runtime_error("05 Please enter the correct syntax.Use (\"QUESTION\"),{\"ANSWER\"}\n");
+        return false;
+    }
     return true;
 }
 
+/*
+* MAIN PROGRAM
+*/
 int main () {
-    
-    // MAIN PROGRAM
-
     try {
 
         // game loop
@@ -173,13 +173,13 @@ int main () {
 
                 case 2: {
                     
+                    bool syntax_bool;
                     // function to add to flash cards
 
                     // input text to add to flash card
                     std::string input_flash_card = input_string_to_var();
-
+                    
                     // error handling
-                    bool syntax_bool;
                     syntax_bool = is_valid(input_flash_card);
                     std::cout << "Syntax_bool return: " << std::boolalpha << syntax_bool << "\n";
                     

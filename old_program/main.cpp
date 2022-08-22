@@ -4,6 +4,8 @@
 #include <list>
 #include <string>
 #include <stack>
+#include <algorithm>
+
 
 // ==================================
 //~~~~ TODO LIST ~~~~
@@ -23,7 +25,7 @@ class FlashCards {
         std::string welcome_message = "Hello, Please selection from the following options:";
 
         std::list<std::string> flash_card_paths = {
-            "data/data_structures.txt",
+            "../data/data_structures.txt",
             "data/design_patters.txt",
             "data/big_o.txt"
         };
@@ -38,12 +40,12 @@ class FlashCards {
 /*
 * input text into file
 */
-void write_file(std::string file_location, std::string &text_to_add) {    
+void write_file(std::string file_location, 
+                std::string &text_to_add) {    
     std::ofstream file_name;
     file_name.open(file_location, std::ios_base::app);
     file_name << text_to_add;
     file_name.close();
-    
 }
 
 /*
@@ -54,14 +56,15 @@ void read_file(std::string file_location) {
     file_name.open(file_location, std::ios_base::app);
     std::string file_text;
 
-    while(std::getline(file_name,file_text)) {
+    while(std::getline(file_name, file_text)) {
         std::cout << file_text << std::endl;
     };
     file_name.close();
 }
 
 // iterate list
-std::string iterate_list(std::list<std::string> &name_of_list, int position) {
+std::string iterate_list(std::list<std::string> &name_of_list, 
+                         int position) {
     std::list<std::string>::iterator selection = name_of_list.begin();
     advance(selection, position);
     return *selection;
@@ -88,14 +91,17 @@ bool is_valid(std::string s) {
     
     std::stack<char> open;
 
+    // if (std::isalnum(s[i])) {
+    
     // remove alpanumeric characters
     std::cout << "Before remove: " << s << "\n";
+    
     for (int i = 0; i < s.size(); i++) {
-        std::cout << i << "\n";
         if ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z')) {
-            s.erase(i); //remove from string
+            s.erase(s[i]);
         }
-    }
+    } 
+    
     std::cout << "After remove: " << s << "\n";
 
     // evalutes syntax

@@ -7,7 +7,7 @@ BuildBinDir = $(BuildDir)/bin
 BuildObjectsDir = $(BuildDir)/objects
 
 CC = g++.exe
-CFlags = -I $(IncludeDir)
+CFlags = -I $(IncludeDir) -g
 
 
 all: $(BuildBinDir)/main

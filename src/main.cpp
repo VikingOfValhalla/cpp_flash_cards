@@ -42,7 +42,7 @@ int main () {
 
 
     std::string file_location = "data/data_structures.txt";
-    string_to_file(file_location, "Here is some new text");
+    string_to_file(file_location, "{\"Question\"}{\"Answer\"}{\"Group\"}");
     
     /*
     std::string test = return_alphanumeric("(this is a test)");
@@ -50,8 +50,8 @@ int main () {
     std::cout << std::boolalpha  <<  test_2 << '\n';
     */
 
-    file_to_string("data/data_structures.txt");
-    
+    std::string test = file_to_string("data/data_structures.txt");
+    std::cout << test;
     /*
     Flash_Card fc;
     std::string q = "this is a question\n";

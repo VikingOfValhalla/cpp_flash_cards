@@ -1,21 +1,22 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 std::string file_to_string(std::string file_location) {
     std::fstream file_handle;
-    std::string lines;
-
+    std::string line;
+    std::stringstream buffer;
+    
     file_handle.open(file_location);
+    uint32_t line_number = 0;
     if (file_handle.is_open()) {
-        // no delimiter causes getline() to not work correctly because it assumes spaces are new lines
-        while(getline(file_handle, lines, ';')) {
-            file_handle >> lines;
-            std::cout << lines;
+        while(getline(file_handle, line)) {
+            // std::cout << line_number++ << " " << line << '\n';
+            buffer << line_number++ << " " << line << '\n';
         }
-        file_handle.close();
     }
-    return lines;
+    return buffer.str();
 }
 
 void string_to_file(std::string file_location, 
@@ -26,3 +27,7 @@ void string_to_file(std::string file_location,
     file_name.close();
 }
 
+void delete_from_file(std::string file_location, int line_number) {
+    // do something
+
+}

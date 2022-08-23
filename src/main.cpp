@@ -41,7 +41,7 @@ int main () {
     // ~~ exit ~~ 
 
 
-    std::string file_location = "../data/data_structures.txt";
+    std::string file_location = "data/data_structures.txt";
     string_to_file(file_location, "Here is some new text");
     
     /*
@@ -50,7 +50,7 @@ int main () {
     std::cout << std::boolalpha  <<  test_2 << '\n';
     */
 
-    file_to_string("../data/data_structures.txt");
+    file_to_string("data/data_structures.txt");
     
     /*
     Flash_Card fc;

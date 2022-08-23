@@ -1,4 +1,5 @@
 #include <stack>
+#include <stdexcept>
 #include <string>
 #include <algorithm>
 

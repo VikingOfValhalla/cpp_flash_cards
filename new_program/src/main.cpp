@@ -2,9 +2,9 @@
 #include <iostream>
 #include <string>
 
-#include "main.h"
-#include "syntax_validation.cpp"
-#include "fstream_process.cpp"
+#include "flashcard/Flash_Card.hpp"
+#include "flashcard/syntax_validation.hpp"
+#include "flashcard/fstream_process.hpp"
 
 void print_start_menu() {
     std::cout << "1) Play Game\n"; 

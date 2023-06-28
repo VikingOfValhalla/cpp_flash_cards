@@ -21,7 +21,7 @@ int main () {
 
     // ~~ play game ~~
     // [ ] - select group
-    //    [ ] - while loop for quanity in group list is > 0
+    //    [ ] - while loop for quantity in group list is > 0
 
     // ~~ edit/create flash cards
     // [ ] - edit flash cards
@@ -52,7 +52,7 @@ int main () {
 
     std::string test = file_to_string("data/data_structures.txt");
     std::cout << test;
-    /*
+    
     Flash_Card fc;
     std::string q = "this is a question\n";
     fc.set_question(q);
@@ -61,7 +61,7 @@ int main () {
     std::string a = "This is an answer\n";
     fc.set_correct_answer(a);
     fc.print_answer();
-    */
+
 
     return 0;
 }

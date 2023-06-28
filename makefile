@@ -6,7 +6,7 @@ BuildDir = build
 BuildBinDir = $(BuildDir)/bin
 BuildObjectsDir = $(BuildDir)/objects
 
-CC = g++.exe
+CC = g++
 CFlags = -I $(IncludeDir) -g
 
 
